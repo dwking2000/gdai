@@ -1,16 +1,20 @@
-GDAI
+GDAI - Green payments combining carbon offsets and the Maker Dai token.
 ====
 
  
 
-GDAI is a stable coin that piggybacks on Maker DAI. GDAI includes carbon offsets as a small percentage of token.
+GDAI is an Ethereum stable coin that piggybacks on Maker DAI. GDAI includes carbon offsets as a small percentage of the token value.
 ----
 
 ### This project was created for the PDX Blockchain Hackathon Week
 
 ### Motivation
 
+Having an ERC-20 token that can purchase carbon offsets when it is used will allow vendors to attract green customers that want to improve the environment by reducing carbon in the atmosphere. Vendors that accept the GDAI will also contribute to the carbon offset program when the convert GDAI back into DAI. This way vendors can pay a small amount into a carbon offset fund in order to attract customers.
+
 ### Use Cases
+
+
 
 ### Token Mechanics
 
