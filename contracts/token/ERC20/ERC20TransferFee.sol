@@ -20,6 +20,8 @@ contract ERC20TransferFee is IERC20 {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
+    
+    mapping (address => uint256) private _feesPaid;
 
     mapping (address => mapping (address => uint256)) private _allowed;
 
@@ -27,13 +29,11 @@ contract ERC20TransferFee is IERC20 {
 
     uint8 constant private _transferFee = 100;
     
-    uint256 internal _currentFees;
-    
     uint256 internal _totalFees;
     
     address internal _manager;
     
-    address internal _wrappedToken = 0xC4375B7De8af5a38a93548eb8453a498222C4fF2;
+    address internal _wrappedToken = 0x08970FEd061E7747CD9a38d680A601510CB659FB;
     
     event Transfer(address indexed from, address indexed to, uint256 value, uint256 fee);
     
@@ -54,7 +54,7 @@ contract ERC20TransferFee is IERC20 {
      * @return the transfer fee of the token.
      */
     function currentFees() public view returns (uint256) {
-        return _currentFees;
+        return IERC20(_wrappedToken).balanceOf(address(this)).sub(_totalSupply);
     }
 
     /**
@@ -92,6 +92,15 @@ contract ERC20TransferFee is IERC20 {
      */
     function balanceOf(address owner) public view returns (uint256) {
         return _balances[owner];
+    }
+
+    /**
+     * @dev Gets the fees paid of the specified address.
+     * @param account The address to query the fees paid.
+     * @return A uint256 representing the amount owned by the passed address.
+     */
+    function feesPaid(address account) public view returns (uint256) {
+        return _feesPaid[account];
     }
 
     /**
@@ -180,9 +189,10 @@ contract ERC20TransferFee is IERC20 {
      */
     function _transfer(address from, address to, uint256 value) internal {
         require(to != address(0));
-        uint256 fee = _payFee(value, _transferFee);
+        uint256 fee = _payFee(from, value, _transferFee);
         _balances[from] = _balances[from].sub(value);
-        _balances[to] = _balances[to].add(value - fee);
+        _balances[to] = _balances[to].add(value);
+        _burn(to, fee);
         emit Transfer(from, to, value, fee);
     }
 
@@ -247,18 +257,17 @@ contract ERC20TransferFee is IERC20 {
      * @param fee The percent fee*100 to pay.
      * @return A boolean that indicates if the operation was successful.
      */
-    function _payFee(uint256 value, uint8 fee) internal returns(uint256) {
+    function _payFee(address payer, uint256 value, uint8 fee) internal returns(uint256) {
         uint256 feePaid = value.mul(fee).div(10000);
-        _currentFees = _currentFees.add(feePaid);
         _totalFees = _totalFees.add(feePaid);
+        _feesPaid[payer] = _feesPaid[payer].add(feePaid);
         return feePaid;
     }
     
-    function withdrawFeesTo(address to, uint256 value) public {
+    function withdrawFees(address to, uint256 value) public {
         require(msg.sender == _manager);
-        require(value <= _currentFees);
+        require(value <= currentFees());
         IERC20(_wrappedToken).transfer(to, value);
-        _currentFees = _currentFees.sub(value);
         emit FeesWithdrawn(to, value);
     }
 

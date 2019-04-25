@@ -65,7 +65,7 @@ contract GDAI is ERC20TransferFee {
      */
     function wrap(uint256 value) public returns (bool) {
         IERC20(_wrappedToken).transferFrom(msg.sender,address(this), value);
-        uint256 fee = _payFee(value, _wrapFee);
+        uint256 fee = _payFee(msg.sender, value, _wrapFee);
         _mint(msg.sender, value.sub(fee));
         emit Wrap(msg.sender, value, fee);
         return true;
@@ -77,7 +77,7 @@ contract GDAI is ERC20TransferFee {
      * @return A boolean that indicates if the operation was successful.
      */
     function unwrap(uint256 value) public returns (bool) {
-        uint256 fee = _payFee(value, _unwrapFee);
+        uint256 fee = _payFee(msg.sender, value, _unwrapFee);
         _burn(msg.sender, value);
         IERC20(_wrappedToken).transfer(msg.sender, value.sub(fee));
         emit Unwrap(msg.sender, value, fee);
