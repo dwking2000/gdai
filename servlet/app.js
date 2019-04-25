@@ -97,6 +97,8 @@ function compare(a, b) {
 
   const feesA = new BigNumber(a.fees.toString());
 	const feesB = new BigNumber(b.fees.toString());
+console.log(a.fees.toString());
+console.log(b.fees.toString());
 
   let comparison = 0;
   if (feesA.isLessThan(feesB)) {
