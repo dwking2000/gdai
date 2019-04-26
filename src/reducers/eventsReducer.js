@@ -70,8 +70,8 @@ export const listenForEvents = () => {
       if (!error)
       dispatch(captureEvent(EVENTS.wrapped, event))
       dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.default))
-      dispatch(updateDAI(getState().Web3Reducer.web3.utils.fromWei(event.returnValues.value.toString())))
-      //dispatch(getBalanceGDAI(getState().Web3Reducer.localAddress))
+      dispatch(updateDAI(getState().LocalUserReducer.dai - getState().Web3Reducer.web3.utils.fromWei(event.returnValues.value.toString())))
+      dispatch(getBalanceGDAI(event.returnValues.by))
       //dispatch(updateDAI(event.returnValues.value))
     })
 
@@ -82,8 +82,8 @@ export const listenForEvents = () => {
       if (!error){
       dispatch(captureEvent(EVENTS.unwrapped, event))
       dispatch(setButtonState(Buttons.unwrapDAI, ButtonStates.default))
-      dispatch(updateGDAI(getState().Web3Reducer.web3.utils.fromWei(event.returnValues.value.toString())))
-      //dispatch(getBalanceDAI(getState().Web3Reducer.localAddress))
+      dispatch(updateGDAI(getState().LocalUserReducer.gdai - getState().Web3Reducer.web3.utils.fromWei(event.returnValues.value.toString())))
+      dispatch(getBalanceDAI(event.returnValues.by))
       }
     })
 
