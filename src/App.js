@@ -6,7 +6,7 @@ import logo from './logo.svg';
 import './App.css';
 import {connect} from "react-redux";
 import Navbar from './components/navbar/index.js'
-import MetaMaskLoginButton from './components/react-metamask-login-button/src';
+import MetaMaskLoginButton from './components/customMetamaskButton/';
 const NAVBAR_TITLE = "Carbon Offset Token"
 
 class App extends Component {

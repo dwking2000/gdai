@@ -3,9 +3,7 @@ import { Fragment } from "react";
 import { MetaMaskButton } from "rimble-ui";
 import Web3 from "web3";
 import MyComponent from "./MyComponent";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-var detect = require("detect-browser").detect;
+import {Button} from "antd";
 
 var isMobile;
 var path = window.location.href;
@@ -61,8 +59,8 @@ class MetaMaskLoginButton extends Component {
       this.init();
     } else {
 
-  const browser = detect();
-  isMobile = !!detectMobile();
+  //const browser = detect();
+  //isMobile = !!detectMobile();
 
   function detectMobile() {
     return (
@@ -75,7 +73,7 @@ class MetaMaskLoginButton extends Component {
       navigator.userAgent.match(/Windows Phone/i)
     );
   }
-  if (!isMobile) {
+  /*if (!isMobile) {
     window.open("http://fwd.metamask.io/" + "?" + path);
 
     switch (browser.name) {
@@ -103,7 +101,7 @@ class MetaMaskLoginButton extends Component {
 
         break;
     }
-  }
+  }*/
       this.setState({ isMetaMask: true });
     }
   }

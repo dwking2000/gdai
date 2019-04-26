@@ -6,7 +6,7 @@ import { contractAddress as guy }  from '../contractInfoGDAI.js'
 import { Buttons, ButtonStates, setButtonState } from './buttonsReducer.js'
 import { updateDAI } from './localUserReducer.js'
 import * as Utils from 'web3-utils'
-import bignumber from 'bignumber'
+import bignumber from 'bignumber.js'
 // ------------------------------------
 // Constants
 // ------------------------------------

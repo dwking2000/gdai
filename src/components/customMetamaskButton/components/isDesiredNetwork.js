@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import image from '../Ropsten.png'
+import {Button} from 'antd';
 import Web3 from 'web3';
 
 
@@ -20,8 +19,6 @@ export default class isDesiredNetwork extends Component {
         e.preventDefault();
         this.setState({ clicked: !this.state.clicked })
         if (this.state.clicked) {
-            this.state.image = <img src={image} height="300" width="450 " alt="fireSpot" />
-            this.state.description = 'Go to the network\'s dropdown and Select Ropsten network'
         }
         else {
             this.state.image = ''
@@ -36,7 +33,6 @@ export default class isDesiredNetwork extends Component {
             <div>
                 <Button onClick={(e) => this.handleClick(e)}> Connect To Ropsten Network</Button>
                 <br />
-                {this.state.image}
                 <br />
                 {this.state.description}
             </div>
