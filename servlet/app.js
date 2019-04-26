@@ -1,7 +1,7 @@
 // Get the web3 Module
 const Web3 = require("web3");
 const BigNumber = require('bignumber.js');
-//const Utils = require("web3-utils");
+const Utils = require("web3-utils");
 const contractInfo = require("./contractInfo.js");
 const fs = require('fs');
 
@@ -70,6 +70,7 @@ function processEvent(event){
 			console.log(JSON.stringify(event));
 			if (event.returnValues.to != "0x0000000000000000000000000000000000000000"){
 				if (typeof state.totalFees[event.returnValues.to] === 'undefined') {
+					console.log(Utils.isBigNumber(event.returnValues.fee));
 					state.totalFees[event.returnValues.to] = {
 						"fees" : event.returnValues.fee,
 						"address" : event.returnValues.to
@@ -98,7 +99,10 @@ function compare(a, b) {
   const feesA = new BigNumber(a.fees.toString());
 	const feesB = new BigNumber(b.fees.toString());
 console.log(a.fees.toString());
-console.log(b.fees.toString());
+console.log(BigNumber.isBigNumber(feesA));
+console.log(web3.utils.fromWei(feesA.toString()));
+console.log(Utils);
+
 
   let comparison = 0;
   if (feesA.isLessThan(feesB)) {
