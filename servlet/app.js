@@ -66,17 +66,17 @@ console.log("total Fees:     " + JSON.stringify(state.totalFees));
 function processEvent(event){
 	switch(event.event) {
 		case "Transfer":
-			console.log("Transfer:          ");
-			console.log(JSON.stringify(event));
+			//console.log("Transfer:          ");
+			//console.log(JSON.stringify(event));
 			if (event.returnValues.to != "0x0000000000000000000000000000000000000000"){
 				if (typeof state.totalFees[event.returnValues.to] === 'undefined') {
-					console.log(Utils.isBigNumber(event.returnValues.fee));
 					state.totalFees[event.returnValues.to] = {
 						"fees" : event.returnValues.fee,
 						"address" : event.returnValues.to
 					}
 				} else {
-					state.totalFees[event.returnValues.to].fees = state.totalFees[event.returnValues.to].fees.add(event.returnValues.fee);
+					state.totalFees[event.returnValues.to].fees = (state.totalFees[event.returnValues.to].fees).add(event.returnValues.fee);
+					console.log("current User fees" + state.totalFees[event.returnValues.to].fees.toString());
 				}
 			}
 		break;
@@ -98,16 +98,11 @@ function compare(a, b) {
 
   const feesA = new BigNumber(a.fees.toString());
 	const feesB = new BigNumber(b.fees.toString());
-console.log(a.fees.toString());
-console.log(BigNumber.isBigNumber(feesA));
-console.log(web3.utils.fromWei(feesA.toString()));
-console.log(Utils);
-
 
   let comparison = 0;
-  if (feesA.isLessThan(feesB)) {
+  if (feesA.isGreaterThan(feesB)) {
     comparison = -1;
-  } else if (feesA.isGreaterThan(feesB)) {
+  } else if (feesA.isLessThan(feesB)) {
     comparison = 1;
   }
   return comparison;
