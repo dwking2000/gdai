@@ -34,6 +34,7 @@ export default class UserDetails extends React.Component {
       this.props.getBalanceDAI(this.props.address)
       this.props.getBalanceGDAI(this.props.address)
       this.props.getFees(this.props.address)
+      this.props.getRank(this.props.address)
     }
   }
   render() {

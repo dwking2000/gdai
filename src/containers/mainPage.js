@@ -4,7 +4,7 @@ import MainPage from '../pages/mainPage.js'
 import { getBalanceDAI } from '../reducers/contractReducerDAI.js'
 import { getBalanceGDAI } from '../reducers/contractReducerGDAI.js'
 const mapStateToProps = (state) => ({
-  details : {address: state.Web3Reducer.localAddress, fees: state.LocalUserReducer.fees, dai: state.LocalUserReducer.dai, gdai: state.LocalUserReducer.gdai, rank: 1},
+  details : {address: state.Web3Reducer.localAddress, fees: state.LocalUserReducer.fees, dai: state.LocalUserReducer.dai, gdai: state.LocalUserReducer.gdai, rank: state.LocalUserReducer.rank},
   web3Exists : state.Web3Reducer.web3,
   localAddress : state.Web3Reducer.localAddress
  })

@@ -6,6 +6,7 @@ export const LOADING_DATA = 'LOADING_DATA'
 export const UPDATE_DAI = 'UPDATE_DAI'
 export const UPDATE_GDAI = 'UPDATE_GDAI'
 export const UPDATE_FEES = 'UPDATE_FEES'
+export const UPDATE_RANK = 'UPDATE_RANK'
 const TestUser = {address:'0xabc123def456hij789', daiSpentOnOffsets: 12, dai: null, gdai: null}
 // ------------------------------------
 // Actions
@@ -16,6 +17,17 @@ export const getFeesByAddress = (address) => {
     leaderboard.forEach((item, index) => {
       if (item.address.toLowerCase() == address) {
         dispatch(updateFees(item.fees));
+      }
+    })
+  }
+}
+
+export const getRankByAddress = (address) => {
+  return (dispatch, getState) => {
+    let leaderboard = getState().LeaderboardReducer.rankedUsers;
+    leaderboard.forEach((item, index) => {
+      if (item.address.toLowerCase() == address) {
+        dispatch(updateRank(++index));
       }
     })
   }
@@ -57,12 +69,23 @@ export function updateGDAI (gdai) {
   }
 }
 
+export function updateRank (rank) {
+  return {
+    type: UPDATE_RANK,
+    payload: {
+      rank
+    }
+  }
+}
+
 export const actions = {
   setLoadingState,
   updateDAI,
   updateGDAI,
   updateFees,
-  getFeesByAddress
+  updateRank,
+  getFeesByAddress,
+  getRankByAddress
 }
 
 // ------------------------------------
@@ -90,13 +113,19 @@ const ACTION_HANDLERS = {
       fees: action.payload.fees
     }
   },
+  [UPDATE_RANK]: (state, action) => {
+    return  {
+      ...state,
+      rank: action.payload.rank
+    }
+  },
 }
 
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = { loadingData: false, error:null, address:'0xabc123def456hij789', fees: {_hex:0x63}, dai: null, gdai: null }
+const initialState = { loadingData: false, error:null, address:'0xabc123def456hij789', fees: {_hex:0x63}, dai: null, gdai: null, rank: 0 }
 export default function LocalUserReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
   return handler ? handler(state, action) : state

@@ -1,13 +1,14 @@
 import { connect } from 'react-redux'
 import { getBalanceDAI } from '../reducers/contractReducerDAI.js'
 import { getBalanceGDAI } from '../reducers/contractReducerGDAI.js'
-import { getFeesByAddress } from '../reducers/localUserReducer.js'
+import { getFeesByAddress, getRankByAddress } from '../reducers/localUserReducer.js'
 import UserDetails from '../components/userDetails'
 
 const mapStateToProp = (state) => ({
   dai : state.LocalUserReducer.dai,
   gdai : state.LocalUserReducer.gdai,
-  fees : null
+  fees : null,
+  rank: state.LocalUserReducer.rank
  })
 
 const mapDispatchToProps = dispatch => {
@@ -22,6 +23,9 @@ const mapDispatchToProps = dispatch => {
    },
    getFees: (address) => {
      dispatch(getFeesByAddress(address))
+   },
+   getRank: (address) => {
+     dispatch(getRankByAddress(address))
    }
   }
 }
