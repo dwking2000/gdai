@@ -2,7 +2,7 @@
 // Imports
 // ------------------------------------
 import { contractAddress, contractABI } from '../contractInfoDAI.js'
-import { contractAddress as guy }  from '../contractInfoGDAI.js'
+import { contractAddress as guy }  from '../contractInfoDAI.js'
 import { Buttons, ButtonStates, setButtonState } from './buttonsReducer.js'
 import { updateDAI } from './localUserReducer.js'
 import * as Utils from 'web3-utils'
@@ -58,8 +58,8 @@ export const unwrapDAIContractCall = (amount) => {
     let amountInWei = getState().Web3Reducer.web3.utils.toWei(amount)
 
     dispatch(setButtonState(Buttons.unwrapDAI, ButtonStates.waiting))
-
-    getState().ContractReducer.deployedContract.methods.unwrap(amountInWei).send({from:getState().Web3Reducer.localAddress}, (error, result) => {
+    console.log(getState().ContractReducerGDAI)
+    getState().ContractReducerGDAI.deployedContract.methods.unwrap(amountInWei).send({from:getState().Web3Reducer.localAddress}, (error, result) => {
       if (!error) {
         console.log(result);
         dispatch(setButtonState(Buttons.unwrapDAI, ButtonStates.default))
@@ -77,6 +77,7 @@ export const getBalanceDAI = (address) => {
   return (dispatch, getState) => {
     getState().ContractReducerDAI.deployedContract.methods.balanceOf(address).call({from:getState().Web3Reducer.localAddress}, (error, result) => {
       if (!error) {
+        console.log(getState().Web3Reducer.web3.utils.fromWei(result.toString()))
         dispatch(updateDAI(getState().Web3Reducer.web3.utils.fromWei(result.toString())))
       } else {
       console.log(error)

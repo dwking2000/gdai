@@ -28,46 +28,11 @@ export const loadContractGDAI = () => {
   }
 }
 
-export const wrapDAIContractCall = (amount) => {
-  return (dispatch, getState) => {
-    let amountInWei = getState().Web3Reducer.web3.utils.toWei(amount)
-
-    dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.waiting))
-
-    getState().ContractReducerGDAI.deployedContract.methods.wrap(amountInWei).send({from:getState().Web3Reducer.localAddress}, (error, result) => {
-      if (!error) {
-        dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.default))
-      } else {
-        // dispatch to reset button state
-        dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.default))
-      }
-    })
-
-  }
-}
-
-export const unwrapDAIContractCall = (amount) => {
-  return (dispatch, getState) => {
-    let amountInWei = getState().Web3Reducer.web3.utils.toWei(amount)
-
-    dispatch(setButtonState(Buttons.unwrapDAI, ButtonStates.waiting))
-
-    getState().ContractReducer.deployedContract.methods.unwrap(amountInWei).send({from:getState().Web3Reducer.localAddress}, (error, result) => {
-      if (!error) {
-        dispatch(setButtonState(Buttons.unwrapDAI, ButtonStates.default))
-      } else {
-        // dispatch to reset button state
-        dispatch(setButtonState(Buttons.unwrapDAI, ButtonStates.default))
-      }
-
-    })
-  }
-}
-
 export const getBalanceGDAI = (address) => {
   return (dispatch, getState) => {
     getState().ContractReducerGDAI.deployedContract.methods.balanceOf(address).call({from:getState().Web3Reducer.localAddress}, (error, result) => {
       if (!error) {
+        console.log(getState().Web3Reducer.web3.utils.fromWei(result.toString()))
       dispatch(updateGDAI(getState().Web3Reducer.web3.utils.fromWei(result.toString())))
       } else {
       console.log(error)

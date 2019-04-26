@@ -53,27 +53,34 @@ export const listenForEvents = () => {
 
 
     deployedContract.events.Transfer({
-        //filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'}, // Using an array means OR: e.g. 20 or 23
+        filter: {address: getState().Web3Reducer.localAddress}, // Using an array means OR: e.g. 20 or 23
         fromBlock: 0,
     }, (error, event) => {
-      if (!error)
-      dispatch(captureEvent(EVENTS.transfer, event))
+      if (!error) {
+        dispatch(captureEvent(EVENTS.transfer, event))
+
+      }
+
     })
 
     deployedContract.events.Wrap({
-        //filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'}, // Using an array means OR: e.g. 20 or 23
+        //filter: {address: getState().Web3Reducer.localAddress}, // Using an array means OR: e.g. 20 or 23
         fromBlock: 0,
     }, (error, event) => {
-      if (!error)
+      if (!error){
       dispatch(captureEvent(EVENTS.wrapped, event))
+      dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.default))
+      }
     })
 
     deployedContract.events.Unwrap({
-        //filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'}, // Using an array means OR: e.g. 20 or 23
+        //filter: {address: getState().Web3Reducer.localAddress}, // Using an array means OR: e.g. 20 or 23
         fromBlock: 0,
     }, (error, event) => {
-      if (!error)
+      if (!error){
       dispatch(captureEvent(EVENTS.unwrapped, event))
+      dispatch(setButtonState(Buttons.unwrapDAI, ButtonStates.default))
+      }
     })
 
     deployedContract.events.Approval({
