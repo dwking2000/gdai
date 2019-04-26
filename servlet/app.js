@@ -4,6 +4,7 @@ const BigNumber = require('bignumber.js');
 const Utils = require("web3-utils");
 const contractInfo = require("./contractInfo.js");
 const fs = require('fs');
+const io = require('socket.io')(2500);
 
 const web3 = new Web3(new Web3.providers.HttpProvider("https://kovan.infura.io/O3SD6Vf1tkJn9ep6KCzk"));
 //const web3 = new Web3(new Web3.providers.WebsocketProvider("ws://104.248.67.239:8545"));
@@ -52,10 +53,13 @@ console.log("total Fees:     " + JSON.stringify(state.totalFees));
 	var unsorted = Object.keys(state.totalFees).map(i => state.totalFees[i]);
 	var sorted = unsorted.sort(compare);
 	var sliced = sorted.slice(0, 10);
-	if(sliced !== state.leaderboard) {
+	console.log(JSON.stringify(sliced));
+	console.log(JSON.stringify(state.leaderboard));
+	console.log(JSON.stringify(sliced) === JSON.stringify(state.leaderboard))
+	if(JSON.stringify(sliced) !== JSON.stringify(state.leaderboard)) {
 		state.leaderboard = sorted.slice(0, 10);
 		console.log("leaderboard:     " + JSON.stringify(state.leaderboard));
-		//io.emit("leaderboard",{leaderboard:state.leaderboard});
+		io.emit("leaderboard",{leaderboard:state.leaderboard});
 	}
 //	console.log("state built");
 //	console.log(JSON.stringify(state));
@@ -85,7 +89,7 @@ function processEvent(event){
 }
 
 function openSockets(){
-	io = require('socket.io')(2500);
+	
 	console.log("start sockets");
 	io.on('connection', function (socket) {
 		console.log("client connected")
@@ -97,7 +101,7 @@ function openSockets(){
 function compare(a, b) {
 
   const feesA = new BigNumber(a.fees.toString());
-	const feesB = new BigNumber(b.fees.toString());
+  const feesB = new BigNumber(b.fees.toString());
 
   let comparison = 0;
   if (feesA.isGreaterThan(feesB)) {
