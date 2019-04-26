@@ -2,7 +2,7 @@
 // Imports
 // ------------------------------------
 import { contractAddress, contractABI } from '../contractInfoDAI.js'
-import { contractAddress as guy }  from '../contractInfoDAI.js'
+import { contractAddress as guy }  from '../contractInfoGDAI.js'
 import { Buttons, ButtonStates, setButtonState } from './buttonsReducer.js'
 import { updateDAI } from './localUserReducer.js'
 import * as Utils from 'web3-utils'
@@ -23,7 +23,7 @@ export const loadContractDAI = () => {
     dispatch({type: CONTRACT_LOADING, payload: {loading: true} });
     if (!getState().Web3Reducer.web3)
     return dispatch({type: CONTRACT_ERRORED, payload: {error: 'could not find web3'}})
-    const deployedContract = getState().Web3Reducer.web3.eth.Contract(contractABI, contractAddress);
+    let deployedContract = getState().Web3Reducer.web3.eth.Contract(contractABI, '0xC4375B7De8af5a38a93548eb8453a498222C4fF2');
     (!deployedContract)
     ? dispatch({type: CONTRACT_ERRORED, payload: {error: 'could not load contracts'}})
     : dispatch({type: CONTRACT_LOADED, payload: {deployedContract: deployedContract, loaded: true, loading: false}})
@@ -32,23 +32,31 @@ export const loadContractDAI = () => {
 
 export const wrapDAIContractCall = (amount) => {
   return (dispatch, getState) => {
+
     // guy = contractInfo.gdai address
     // wad = amount allowed
     let amountInWei = getState().Web3Reducer.web3.utils.toWei(amount)
-
     dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.waiting))
-    getState().ContractReducerDAI.deployedContract.methods.approve(guy, amountInWei).send({from:getState().Web3Reducer.localAddress}, (error, result) => {
+    getState().Web3Reducer.web3.eth.Contract(contractABI, '0xC4375B7De8af5a38a93548eb8453a498222C4fF2').methods.approve(guy, amountInWei).send({from:getState().Web3Reducer.localAddress}, (error, result) => {
+      if (!error) {
+        getState().Web3Reducer.web3.eth.Contract(contractABI, '0xC4375B7De8af5a38a93548eb8453a498222C4fF2').once('Approval', {
+            filter: {src:getState().Web3Reducer.localAddress}, // Using an array means OR: e.g. 20 or 23
+            fromBlock: 0
+        }, (error, event) => {
+          if (!error) {
+            getState().ContractReducerGDAI.deployedContract.methods.wrap(amountInWei).send({from:getState().Web3Reducer.localAddress}, (error, result) => {
+              if (!error) {
+                // TODO: - dispatch action to update local user dai balance
+                dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.default))
+              } else {
+                // dispatch to reset button state
+                dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.default))
+              }
+            })
+          }
+         });
 
-    }).then((receipt) => {
-      getState().ContractReducerGDAI.deployedContract.methods.wrap(amountInWei).send({from:getState().Web3Reducer.localAddress}, (error, result) => {
-        if (!error) {
-          // TODO: - dispatch action to update local user dai balance
-          dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.default))
-        } else {
-          // dispatch to reset button state
-          dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.default))
-        }
-      })
+      }
     })
   }
 }
@@ -75,7 +83,7 @@ export const unwrapDAIContractCall = (amount) => {
 export const getBalanceDAI = (address) => {
   let rtn = null;
   return (dispatch, getState) => {
-    getState().ContractReducerDAI.deployedContract.methods.balanceOf(address).call({from:getState().Web3Reducer.localAddress}, (error, result) => {
+    getState().Web3Reducer.web3.eth.Contract(contractABI, '0xC4375B7De8af5a38a93548eb8453a498222C4fF2').methods.balanceOf(address).call({from:getState().Web3Reducer.localAddress}, (error, result) => {
       if (!error) {
         console.log(getState().Web3Reducer.web3.utils.fromWei(result.toString()))
         dispatch(updateDAI(getState().Web3Reducer.web3.utils.fromWei(result.toString())))

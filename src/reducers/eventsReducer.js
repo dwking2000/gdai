@@ -46,7 +46,7 @@ export const listenForEvents = () => {
     if (!getState().Web3Reducer.web3)
     return
 
-    let deployedContract = getState().ContractReducerGDAI.deployedContract;
+    let deployedContract = getState().ContractReducerDAI.deployedContract;
     console.log(deployedContract)
 
     deployedContract.getPastEvents('allEvents', { fromBlock: 0}).then(events => console.log(events));
@@ -64,17 +64,16 @@ export const listenForEvents = () => {
     })
 
     deployedContract.events.Wrap({
-        //filter: {address: getState().Web3Reducer.localAddress}, // Using an array means OR: e.g. 20 or 23
+        filter: {address: getState().Web3Reducer.localAddress}, // Using an array means OR: e.g. 20 or 23
         fromBlock: 0,
     }, (error, event) => {
-      if (!error){
+      if (!error)
       dispatch(captureEvent(EVENTS.wrapped, event))
       dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.default))
-      }
     })
 
     deployedContract.events.Unwrap({
-        //filter: {address: getState().Web3Reducer.localAddress}, // Using an array means OR: e.g. 20 or 23
+        filter: {address: getState().Web3Reducer.localAddress}, // Using an array means OR: e.g. 20 or 23
         fromBlock: 0,
     }, (error, event) => {
       if (!error){

@@ -32,6 +32,7 @@ export const getBalanceGDAI = (address) => {
   return (dispatch, getState) => {
     getState().ContractReducerGDAI.deployedContract.methods.balanceOf(address).call({from:getState().Web3Reducer.localAddress}, (error, result) => {
       if (!error) {
+        console.log(result)
         console.log(getState().Web3Reducer.web3.utils.fromWei(result.toString()))
       dispatch(updateGDAI(getState().Web3Reducer.web3.utils.fromWei(result.toString())))
       } else {
