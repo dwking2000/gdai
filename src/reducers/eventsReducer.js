@@ -26,8 +26,9 @@
 // can get 3 variables by cvalling functions "wrapFee", "unwrapFee", "transferFee"
 // - used to display to user related fees
 import { Buttons, ButtonStates, setButtonState } from './buttonsReducer.js'
-
-
+import { updateDAI, updateGDAI } from './localUserReducer.js'
+import { getBalanceDAI } from './contractReducerDAI.js'
+import { getBalanceGDAI } from './contractReducerGDAI.js'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -60,7 +61,6 @@ export const listenForEvents = () => {
         dispatch(captureEvent(EVENTS.transfer, event))
 
       }
-
     })
 
     deployedContract.events.Wrap({
@@ -70,6 +70,9 @@ export const listenForEvents = () => {
       if (!error)
       dispatch(captureEvent(EVENTS.wrapped, event))
       dispatch(setButtonState(Buttons.wrapDAI, ButtonStates.default))
+      dispatch(updateDAI(getState().Web3Reducer.web3.utils.fromWei(event.returnValues.value.toString())))
+      //dispatch(getBalanceGDAI(getState().Web3Reducer.localAddress))
+      //dispatch(updateDAI(event.returnValues.value))
     })
 
     deployedContract.events.Unwrap({
@@ -79,6 +82,8 @@ export const listenForEvents = () => {
       if (!error){
       dispatch(captureEvent(EVENTS.unwrapped, event))
       dispatch(setButtonState(Buttons.unwrapDAI, ButtonStates.default))
+      dispatch(updateGDAI(getState().Web3Reducer.web3.utils.fromWei(event.returnValues.value.toString())))
+      //dispatch(getBalanceDAI(getState().Web3Reducer.localAddress))
       }
     })
 

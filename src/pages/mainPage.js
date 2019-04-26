@@ -35,7 +35,7 @@ const noLocalAddress = () => {
 const main = (details) => {
     return (details)
     ? <div>
-    <h1>Home Page</h1>
+    <h1><b>Home</b></h1>
         <List
           itemLayout="vertical"
           size="large"
