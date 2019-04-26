@@ -1,0 +1,6 @@
+.ant-menu-horizontal {
+  position: fixed !important;
+width: 100%;
+background: white;
+z-index: 100;
+}

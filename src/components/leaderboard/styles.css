@@ -1,0 +1,6 @@
+.ant-list-vertical .ant-list-item-main {
+  text-align:left !important;
+}
+.ant-list-vertical .ant-list-item-extra {
+    margin-right: 40px !important;
+}

@@ -1,39 +1,68 @@
-GDAI - Green payments combining carbon offsets and the Maker Dai token.
-====
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
- 
+## Available Scripts
 
-GDAI is an Ethereum stable coin that piggybacks on Maker DAI. GDAI includes carbon offsets as a small percentage of the token value.
-----
+In the project directory, you can run:
 
-### This project was created for the PDX Blockchain Hackathon Week
+### `npm start`
 
-### Motivation
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Having an ERC-20 token that can purchase carbon offsets when it is used will allow vendors to attract green customers that want to improve the environment by reducing carbon in the atmosphere. Vendors that accept the GDAI will also contribute to the carbon offset program when the convert GDAI back into DAI. This way vendors can pay a small amount into a carbon offset fund in order to attract customers.
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
 
-### Use Cases
+### `npm test`
 
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `npm run build`
 
-### Token Mechanics
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Maker [Dai](https://makerdao.com/en/dai) is a USD-pegged stablecoin built on the Ethereum blockchain, and has no centralized authority. Its $1 USD equivalent is maintained through automatic pricing mechanisms built into smart contracts. Dai can be freely traded like any other ERC20 token, and anyone with an Ethereum wallet can own, accept, and transfer it without a middleman.
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-GDAI is an ERC-20 token that is minted when DAI is sent to the GDAI contract. The minting process take a portion of the DAI sent to the contract and converts it into a carbon offset. This is done by sending the carbon offset percentage of DAI to a carbon offset purchase pool. Once minted the new GDAI can be used for payments. Anyone that holds the GDAI can unwrap the DAI, essentially freeing the DAI and destryoing (burning) the GDAI token. During the unwrapping another percentage of DAI is moved to the carbon offset purchasing pool, leaving the recipient with the final DAI amount (Dwrapped - Coffset).
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### Enhancements, Future Work, Stretch Goals
+### `npm run eject`
 
-It should be fairly easy to make the carbon offset pool owned / managed by a DAO such as Aragon or DAOStack. This would allow the DAO members to find carbon offset programs and purchase the offsets, creating a carbon offset token in the process. This token could be used to represent the carbon offset portion of the GDAI in the GDAI contract.
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-### Maker DAI resources
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-[Maker](https://makerdao.com/en/)
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-[What is Maker Dai? | Beginner's Guide - CoinCentral](https://coincentral.com/maker-dai-beginner-guide/)
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-Dai (DAI) price, charts, market cap, and other metrics | [CoinMarketCap](https://coinmarketcap.com/currencies/dai/#markets)
+## Learn More
 
-[Maker for Dummies: A Plain English Explanation of the Dai Stablecoin](https://medium.com/cryptolinks/maker-for-dummies-a-plain-english-explanation-of-the-dai-stablecoin-e4481d79b90)
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-[Dai | Dashboard](https://dai.makerdao.com/)
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
