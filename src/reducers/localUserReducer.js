@@ -61,7 +61,8 @@ export const actions = {
   setLoadingState,
   updateDAI,
   updateGDAI,
-  updateFees
+  updateFees,
+  getFeesByAddress
 }
 
 // ------------------------------------

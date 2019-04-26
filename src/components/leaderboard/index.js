@@ -9,8 +9,8 @@ const EMPTY_MESSAGE = 'Oops, no content'
 
 const RankDescription = (rankNumber, isLocalUser) => {
   return (isLocalUser)
-  ? <p>Congrats! You have achieved the rank of {rankNumber}.</p>
-  : <p>Rank {rankNumber}</p>
+  ? <p>Congrats! You have achieved the rank of {rankNumber + 1}.</p>
+  : <p>Rank {rankNumber + 1}</p>
 }
 
 const IconText = ({ type, text }) => (
@@ -43,7 +43,7 @@ export default class Leaderboard extends React.Component {
           dataSource={this.props.rankedUsers}
           footer={<div><b>Rankings</b> are based on total carbon offset fees paid by users</div>} // <--- TODO: build footer notes for leaderboard page. Include info about how the leaderboard is calculated?
           renderItem={(item, index) => (
-            <UserDetailsContainer rank={index} {...item} />
+            <UserDetailsContainer rank={++index} {...item} />
           )}
         />
     : <p>{EMPTY_MESSAGE}</p>
