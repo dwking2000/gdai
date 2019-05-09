@@ -8,6 +8,10 @@ GDAI is an Ethereum stable coin that piggybacks on Maker DAI. GDAI includes carb
 
 ### This project was created for the PDX Blockchain Hackathon Week
 
+### Presentation Slides
+
+https://docs.google.com/presentation/d/12LcLoDDkqDJ86PdEkq8b-Nld4ky1hiwJEeBIE2iAa_0/edit?usp=sharing
+
 ### Motivation
 
 Having an ERC-20 token that can purchase carbon offsets when it is used will allow vendors to attract green customers that want to improve the environment by reducing carbon in the atmosphere. Vendors that accept the GDAI will also contribute to the carbon offset program when the convert GDAI back into DAI. This way vendors can pay a small amount into a carbon offset fund in order to attract customers.
